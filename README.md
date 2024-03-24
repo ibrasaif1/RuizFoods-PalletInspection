@@ -17,3 +17,7 @@ This is your PostgreSQL connection string, which the application uses to connect
 The `dotenv` package, already included in the project, will automatically load these environment variables, allowing the application to access your database securely.
 
 **Important**: The `.env` file contains sensitive information and should not be committed to Git. It is already listed in `.gitignore` to prevent it from being accidentally included in version control.
+
+# Running the project
+
+Open the code locally and run `node server.js` for the project to start running locally. To do this you'll need to download and install Node which you can do at https://nodejs.org/en/download/
