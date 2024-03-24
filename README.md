@@ -1,13 +1,12 @@
-# RuizFoods-PalletInspection
 # Setting Up the .env File for Local Development
 
-To connect to the database and run the server locally, you'll need to set up a `.env` file in the root of the project with the necessary environment variables.
+To connect to the database and run the server locally, you'll need to set up a `.env` file in the root of the project with the necessary environment variables. This is to connect to the database but I keep this off the repo for safety reasons so no one unauthorized has the credentials to access the database.
 
 ## Steps:
 
 1. Create a file in the root of the project named `.env`.
 
-2. Add the following line to the `.env` file, replacing `username`, `password`, `host`, `port`, and `database` with your actual database connection details:
+2. Add the following line to the `.env` file, replacing `username`, `password`, `host`, `port`, and `database` with our actual database connection details:
 
 DATABASE_URL=postgresql://username:password@host:port/database
 
