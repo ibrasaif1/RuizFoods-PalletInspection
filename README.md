@@ -20,4 +20,6 @@ The `dotenv` package, already included in the project, will automatically load t
 
 # Running the project
 
-Open the code locally and run `node server.js` for the project to start running locally. To do this you'll need to download and install Node which you can do at https://nodejs.org/en/download/
+Open the code locally and run `node server.js` for the project to start running locally. To do this you'll need to download and install Node which you can do at https://nodejs.org/en/download/. To check if you have it installed you can run `node -v` in a terminal.
+
+Once you run `node server.js` and have the project running, you can open a browser and go to `http://localhost:3000/tx1`, `http://localhost:3000/ca1`, `http://localhost:3000/ca4`, and `http://localhost:3000/sc1` to see those corresponding tables.
