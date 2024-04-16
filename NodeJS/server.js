@@ -22,6 +22,7 @@ const pool = new pg.Pool({
 });
 
 // Nodemailer setup
+// This is from ChatGPT and this is not used yet, but the idea is for users to receive an email so they can verify they are signing up with a valid @ruizfoods.com email
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -34,9 +35,9 @@ const transporter = nodemailer.createTransport({
 app.post('/register', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   console.log("Received email:", email);
-  if (!email.endsWith('@gmail.com')) {
-    return res.status(400).send('Registration is only allowed with a Ruiz Foods email.');
-  }
+  // if (!email.endsWith('@ruizfoods.com')) {
+  //   return res.status(400).send('Registration is only allowed with a Ruiz Foods email.');
+  // }
 
   try  {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -47,10 +48,12 @@ app.post('/register', async (req, res) => {
     console.log(newUser.rows);
 
     // Create verification token
+    // The following two lines do not get used yet and are also from GPT, but the idea is verifying the user
     // const token = jwt.sign({ email }, process.env.JWT_secret, { expiresIn: '24h' });
-    const verificationUrl = `http://localhost:3001/verify-email?token=${token}`;
+    // const verificationUrl = `http://localhost:3001/verify-email?token=${token}`;
 
     // Send verification email
+    // Following code is not used yet but it is self-explanatory
     await transporter.sendMail({
       from: '"Ruiz Foods" <noreply@ruizfoods.com>',
       to: email,
@@ -66,6 +69,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Email Verification Endpoint
+// Following code is not used yet but it is self-explanatory
 app.get('/verify-email', async (req, res) => {
   const { token } = req.query;
   try {
