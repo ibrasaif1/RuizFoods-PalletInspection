@@ -24,11 +24,11 @@ export default class SignUp extends Component {
     }
 
     // Validate email format and domain
-    const emailRegex = /^[^\s@]+@gmail\.com$/;
-    if (!emailRegex.test(this.state.email)) {
-      this.setState({ error: 'Please enter a valid ruizfoods.com email address'});
-      return;
-    }
+    // const emailRegex = /^[^\s@]+@ruizfoods\.com$/;
+    // if (!emailRegex.test(this.state.email)) {
+    //   this.setState({ error: 'Please enter a valid ruizfoods.com email address'});
+    //   return;
+    // }
 
     try {
       const response = await axios.post('http://localhost:3001/register', {
