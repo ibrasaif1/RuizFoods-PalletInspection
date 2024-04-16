@@ -4,18 +4,18 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const pg = require('pg');
-// require('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 const pool = new pg.Pool({
-  host: 'ruiz-pallet-risk-tracker.c3kk422uemzw.us-east-1.rds.amazonaws.com',
-  user: 'postgres',
-  port: 5432,
-  password: 'EdoFeI0E<3EDhN7dhrGCmyY2o_ZM',
-  database: 'postgres',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   ssl: {
     rejectUnauthorized: false
   }
