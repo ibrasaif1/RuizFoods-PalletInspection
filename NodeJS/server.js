@@ -22,7 +22,6 @@ const pool = new pg.Pool({
 });
 
 // Nodemailer setup
-// This is from ChatGPT and this is not used yet, but the idea is for users to receive an email so they can verify they are signing up with a valid @ruizfoods.com email
 const transporter = nodemailer.createTransport({
   service: 'outlook',
   auth: {
