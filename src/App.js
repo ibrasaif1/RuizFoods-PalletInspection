@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Login from './components/login.component'
 import SignUp from './components/signup.component'
+import TableDisplay from './components/TableDisplay'
 import logo from './logo.png'
+
+const Dashboard = () => {
+  const [selectedTable, setSelectedTable] = useState('');
+
+  return (
+    <div>
+      <h1>Welcome to Your Dashboard</h1>
+      <div>
+        <button onClick={() => setSelectedTable('TX1')}>TX1</button>
+        <button onClick={() => setSelectedTable('CA1')}>CA1</button>
+        <button onClick={() => setSelectedTable('CA4')}>CA4</button>
+        <button onClick={() => setSelectedTable('SC1')}>SC1</button>
+      </div>
+      {selectedTable && <TableDisplay tableName={selectedTable} />}
+    </div>
+  );
+};
+
 function App() {
   return (
     <Router>
@@ -30,15 +49,16 @@ function App() {
         </nav>
         <div className="auth-wrapper">
           <div className="auth-inner">
-            <Routes>
-              <Route exact path="/" element={<Login />} />
-              <Route path="/log-in" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
-            </Routes>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/log-in" element={<Login />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </Routes>
           </div>
         </div>
       </div>
     </Router>
   )
 }
+
 export default App

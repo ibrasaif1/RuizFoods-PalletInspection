@@ -30,6 +30,25 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Endpoint to get data from a specific table
+app.get('/getTableData/:tableName', async (req, res) => {
+  const { tableName } = req.params;
+  const validTables = ['TX1', 'CA1', 'CA4', 'SC1'];
+  
+  if (!validTables.includes(tableName)) {
+    return res.status(400).send('Invalid table name');
+  }
+
+  try {
+    const queryText = `SELECT * FROM "${tableName}"`;
+    const result = await pool.query(queryText);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    res.status(500).send('Failed to fetch data');
+  }
+});
+
 // Registration endpoint
 app.post('/register', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
