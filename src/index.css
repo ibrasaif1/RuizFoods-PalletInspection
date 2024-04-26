@@ -66,7 +66,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 .scroll-view {
   overflow-y: auto;
-  max-height: calc(100vh - 500px);
+  max-height: calc(100vh - 600px);
   /* padding-top: 30px; */
   padding-bottom: 30px;
   flex-grow: 1;
@@ -97,13 +97,19 @@ body, html, .App, #root, .auth-wrapper {
 .page-buttons {
   display: flex;
   flex-wrap: wrap;
+  /* flex-direction: column; */
   justify-content: left;
+  /* align-items: center; */
   gap: 10px;
-  /* padding: 10px 0; */
+  padding: 10px;
 }
 .table-display-container {
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 200px); /* Adjust based on header and any other UI elements */
   overflow: hidden; /* Prevents unwanted scrolling outside of the scroll-view */
+}
+.page-buttons-container {
+  overflow-y: auto;
+  max-height: 60px;
 }

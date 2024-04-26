@@ -86,8 +86,10 @@ const TableDisplay = ({ tableName }) => {
                 Next
             </button>
         </div>
-        <div className="page-buttons">
-            {renderPaginationButtons()}
+        <div className="page-buttons-container">
+            <div className="page-buttons">
+                {renderPaginationButtons()}
+            </div>
         </div>
       </div>
     </div>
