@@ -34,15 +34,28 @@ const transporter = nodemailer.createTransport({
 app.get('/getTableData/:tableName', async (req, res) => {
   const { tableName } = req.params;
   const validTables = ['TX1', 'CA1', 'CA4', 'SC1'];
+  const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
+  const limit = parseInt(req.query.limit) || 100; // Default to 100 records per page if not specified
+  const offset = (page - 1) * limit;
   
   if (!validTables.includes(tableName)) {
     return res.status(400).send('Invalid table name');
   }
 
   try {
-    const queryText = `SELECT * FROM "${tableName}"`;
-    const result = await pool.query(queryText);
-    res.json(result.rows);
+    const countQueryText = `SELECT COUNT(*) FROM "${tableName}"`;
+    const countResult = await pool.query(countQueryText);
+    const totalRows = parseInt(countResult.rows[0].count);
+    const totalPages = Math.ceil(totalRows / limit);
+    console.log(totalRows)
+  
+    const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY location_id LIMIT $1 OFFSET $2`;
+    const result = await pool.query(dataQueryText, [limit, offset]);
+    res.json({
+      data: result.rows,
+      currentPage: page,
+      totalPages: totalPages
+    });
   } catch (error) {
     console.error('Error fetching data:', error.message);
     res.status(500).send('Failed to fetch data');
