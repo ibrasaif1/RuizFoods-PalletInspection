@@ -18,24 +18,25 @@ export default class SignUp extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    if (this.state.password !== this.state.confirmPassword) {
-      this.setState({ error: 'Passwords do not match'});
+    const { firstName, lastName, email, password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
+      this.setState({ error: 'Passwords do not match' });
       return;
     }
 
-    // Validate email format and domain
-    // const emailRegex = /^[^\s@]+@ruizfoods\.com$/;
-    // if (!emailRegex.test(this.state.email)) {
-    //   this.setState({ error: 'Please enter a valid ruizfoods.com email address'});
-    //   return;
-    // }
+    if (!email.endsWith('@ruizfoods.com')) {
+      this.setState({ error: 'Registration is only allowed with a Ruiz Foods email.' });
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:3001/register', {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        password: this.state.password,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        verified: false,
       });
       alert(response.data);
     } catch (error) {
