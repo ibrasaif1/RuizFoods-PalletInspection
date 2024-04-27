@@ -45,10 +45,17 @@ app.get('/getTableData/:tableName', async (req, res) => {
   
     const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY location_id LIMIT $1 OFFSET $2`;
     const result = await pool.query(dataQueryText, [limit, offset]);
+    
+    const summaryQueryText = `SELECT COUNT(*) FILTER (WHERE risk_level >= 0.9) AS "highlyRisky", COUNT(*) FILTER (WHERE risk_level >= 0.7 AND risk_level < 0.9) AS "slightlyRisky", COUNT(*) FILTER (WHERE risk_level < 0.7) as "likelySafe" FROM "${tableName}"`;
+    const summaryResult = await pool.query(summaryQueryText);
+    console.log("Summary: ", summaryResult.rows[0]);
+    const summary = summaryResult.rows[0];
+
     res.json({
       data: result.rows,
       currentPage: page,
-      totalPages: totalPages
+      totalPages: totalPages,
+      summary: summary
     });
   } catch (error) {
     console.error('Error fetching data:', error.message);

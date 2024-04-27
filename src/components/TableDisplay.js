@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const TableDisplay = ({ tableName }) => {
   const [data, setData] = useState([]);
+  const [summary, setSummary] = useState({ highlyRisky: 0, slightlyRisky: 0, likelySafe: 0});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -10,14 +11,21 @@ const TableDisplay = ({ tableName }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/getTableData/${tableName}?page=${currentPage}&limit=100`);
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
           setTotalPages(response.data.totalPages || 0);
+          // Check if summary is defined before setting it
+          if (response.data.summary) {
+            setSummary(response.data.summary);
+          } else {
+            console.log('No summary data received', response.data);
+          }
         } else {
           console.error('Invalid data structure:', response.data);
           setData([]); // Reset data to prevent errors in rendering
           setTotalPages(0); // Ensure totalPages is reset if data is invalid
+          setSummary({ highlyRisky: 0, slightlyRisky: 0, likelySafe: 0 }); // Reset summary
         }
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -48,6 +56,9 @@ const TableDisplay = ({ tableName }) => {
   return (
     <div className="table-display-container">
       <h2 className="sticky-table-name">Table: {tableName}</h2>
+      <p>
+        There are {summary.highlyRisky} highly risky, {summary.slightlyRisky} slightly risky, and {summary.likelySafe} likely safe pallet locations.
+      </p>
       <div className="scroll-view">
         <table>
             <thead className="sticky-header">
