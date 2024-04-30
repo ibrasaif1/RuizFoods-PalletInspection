@@ -15,7 +15,7 @@ const TableDisplay = ({ tableName }) => {
         if (response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
           setTotalPages(response.data.totalPages || 0);
-          setRiskyCount(response.data.summary.highlyRisky);
+          setRiskyCount(response.data.summary.risky);
         } else {
           console.error('Invalid data structure:', response.data);
           setData([]); // Reset data to prevent errors in rendering

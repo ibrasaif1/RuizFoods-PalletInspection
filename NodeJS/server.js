@@ -43,7 +43,7 @@ app.get('/getTableData/:tableName', async (req, res) => {
     const totalPages = Math.ceil(totalRows / limit);
     console.log(totalRows)
   
-    const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY location_id LIMIT $1 OFFSET $2`;
+    const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY risk_level DESC, location_id ASC LIMIT $1 OFFSET $2`;
     const result = await pool.query(dataQueryText, [limit, offset]);
     
     const summaryQueryText = `SELECT COUNT(*) FILTER (WHERE risk_level = TRUE) AS "risky" FROM "${tableName}"`;
