@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import Login from './components/login.component'
 import SignUp from './components/signup.component'
 import TableDisplay from './components/TableDisplay'
@@ -50,9 +50,10 @@ function App() {
         <div className="auth-wrapper">
           <div className="auth-inner">
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Navigate replace to="/log-in" />} />
             <Route path="/log-in" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
           </div>
         </div>

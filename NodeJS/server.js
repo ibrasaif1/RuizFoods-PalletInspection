@@ -24,6 +24,23 @@ const pool = new pg.Pool({
   }
 });
 
+// Middleware to authenticate and authorize user
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (token == null) return res.status(401).send('Access Denied');
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).send('Invalid Token');
+    req.user = user;
+    next();
+  });
+};
+
+// Use this middleware in your protected routes
+app.use('/dashboard', authenticateToken);
+
 // Endpoint to get data from a specific table
 app.get('/getTableData/:tableName', async (req, res) => {
   const { tableName } = req.params;
@@ -102,6 +119,32 @@ app.post('/register', async (req, res) => {
       console.error('Error response from SendGrid:', error.response.body);
     }
     res.status(500).send('Database error: ' + error.message);
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (user.rows.length > 0) {
+      const validPassword = await bcrypt.compare(password, user.rows[0].password);
+      if (validPassword) {
+        if (!user.rows[0].verified) {
+          res.status(401).json({ error: "Please verify your email before logging in." });
+        } else {
+          const token = jwt.sign({ email: user.rows[0].email }, process.env.JWT_SECRET, { expiresIn: '24h' });
+          res.json({ message: "Login successful.", token: token });
+        }
+      } else {
+        res.status(401).json({ error: "Invalid password." });
+      }
+    } else {
+      res.status(404).json({ error: "User not found." });
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: "Database error during login." });
   }
 });
 

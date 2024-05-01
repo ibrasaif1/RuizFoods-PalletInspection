@@ -113,3 +113,11 @@ body, html, .App, #root, .auth-wrapper {
   overflow-y: auto;
   max-height: 60px;
 }
+.risky {
+  background-color: red;
+  color: white;
+}
+.safe {
+  background-color: green;
+  color: white;
+}

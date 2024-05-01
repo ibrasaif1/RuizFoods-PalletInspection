@@ -66,7 +66,7 @@ const TableDisplay = ({ tableName }) => {
             </thead>
             <tbody>
             {data.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className={item.risk_level ? 'risky' : 'safe'}>
                 <td>{item.location_id}</td>
                 <td>{item.risk_level ? 'Risky' : 'Safe'}</td>
                 <td>{item.last_updated}</td>
