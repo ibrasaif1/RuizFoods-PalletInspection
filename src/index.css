@@ -114,10 +114,10 @@ body, html, .App, #root, .auth-wrapper {
   max-height: 60px;
 }
 .risky {
-  background-color: red;
+  background-color: #e57373;
   color: white;
 }
 .safe {
-  background-color: green;
+  background-color: #81c784;
   color: white;
 }

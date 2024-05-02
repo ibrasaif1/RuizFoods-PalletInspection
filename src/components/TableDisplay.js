@@ -6,6 +6,7 @@ const TableDisplay = ({ tableName }) => {
   const [riskyCount, setRiskyCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,11 +16,13 @@ const TableDisplay = ({ tableName }) => {
         if (response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
           setTotalPages(response.data.totalPages || 0);
-          setRiskyCount(response.data.summary.risky);
+          setTotalCount(response.data.totalRows);
+          setRiskyCount(response.data.summary.risky || 0);
         } else {
           console.error('Invalid data structure:', response.data);
           setData([]); // Reset data to prevent errors in rendering
           setTotalPages(0); // Ensure totalPages is reset if data is invalid
+          setTotalCount(0);
           setRiskyCount(0);
         }
       } catch (error) {
@@ -29,6 +32,13 @@ const TableDisplay = ({ tableName }) => {
   
     fetchData();
   }, [tableName, currentPage]);
+
+  const handleImageClick = (url, event) => {
+    if (!url) {
+      event.preventDefault();
+      alert('No image available');
+    }
+  };
 
   const renderPaginationButtons = () => {
     let buttons = [];
@@ -48,11 +58,13 @@ const TableDisplay = ({ tableName }) => {
     return buttons;
   };
 
+  const safeCount = totalCount - riskyCount;
+
   return (
     <div className="table-display-container">
       <h2 className="sticky-table-name">Table: {tableName}</h2>
       <p>
-        There are {riskyCount} risky pallet locations.
+        There are {safeCount} safe pallet locations.
       </p>
       <div className="scroll-view">
         <table>
@@ -70,7 +82,16 @@ const TableDisplay = ({ tableName }) => {
                 <td>{item.location_id}</td>
                 <td>{item.risk_level ? 'Risky' : 'Safe'}</td>
                 <td>{item.last_updated}</td>
-                <td><a href={item.image_url} target="_blank" rel="noopener noreferrer">View Image</a></td>
+                <td>
+                  <a 
+                    href={item.image_url || '#'}
+                    onClick={(e) => handleImageClick(item.image_url, e)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Image
+                  </a>
+                </td>
                 </tr>
             ))}
             </tbody>

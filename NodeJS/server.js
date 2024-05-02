@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 const cors = require('cors');
 const pg = require('pg');
 const sendGridMail = require('@sendgrid/mail');
@@ -60,7 +59,7 @@ app.get('/getTableData/:tableName', async (req, res) => {
     const totalPages = Math.ceil(totalRows / limit);
     console.log(totalRows)
   
-    const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY risk_level DESC, location_id ASC LIMIT $1 OFFSET $2`;
+    const dataQueryText = `SELECT * FROM "${tableName}" ORDER BY risk_level ASC, (image_url IS NULL) ASC, location_id ASC LIMIT $1 OFFSET $2`;
     const result = await pool.query(dataQueryText, [limit, offset]);
     
     const summaryQueryText = `SELECT COUNT(*) FILTER (WHERE risk_level = TRUE) AS "risky" FROM "${tableName}"`;
@@ -72,6 +71,7 @@ app.get('/getTableData/:tableName', async (req, res) => {
       data: result.rows,
       currentPage: page,
       totalPages: totalPages,
+      totalRows: totalRows,
       summary: summary
     });
   } catch (error) {
