@@ -3,6 +3,8 @@
 2. Open terminal in project directory and run `npm start` to run React app
 3. Open another terminal in project directory and run `node NodeJS/server.js` to run server script
 
+The main files to worry about are src/App.js, the src/components folder, and NodeJS/server.js
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
