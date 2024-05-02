@@ -1,5 +1,5 @@
 # How To Run (after cloning):
-1. Create .env file in project directory for environment variables (ask me for this).
+1. Create .env file in project directory for environment variables (you can ask Ibrahim Saifullah ibrahim.saifullah1@gmail.com for this).
 2. Open terminal in project directory and run `npm start` to run React app
 3. Open another terminal in project directory and run `node NodeJS/server.js` to run server script
 
