@@ -8,7 +8,7 @@
 The main files to worry about are `src/App.js`, the `src/components` folder, and `NodeJS/server.js`.
 
 # Database Creation Instructions
-I personally chose PostgreSQL to create the database.
+I personally chose PostgreSQL to create the database. I created the database in AWS RDS but have deleted since I am not sure how to manage the billing and I lose a few dollars a month.
 I created 5 tables: 1 for each warehouse and 1 for users. The warehouse tables were titled TX1, CA1, CA4, and SC1 which is how Ruiz Foods refers to them. Each of the warehouse tables have the same schema, with the primary key being `location_id` (data type: text), second column being `risk_level` (data type: boolean), `last_updated` (data type: timestamp with time zone), and `image_url` (data type: text). 
 TX1 has 3526 rows. CA1 has 6472 rows. CA4 has 924 rows. SC1 has 3296 rows. 
 I obtained .csv files with pallet locations from a company rep and wrote a script to populate these tables with the pallet locations, you can do the same. I have added these files in folder `pallet_locations`. 
