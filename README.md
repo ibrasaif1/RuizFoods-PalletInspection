@@ -1,9 +1,12 @@
-# How To Run (after cloning):
-1. Create .env file in project directory for environment variables (you can ask Ibrahim Saifullah ibrahim.saifullah1@gmail.com for this).
-2. Open terminal in project directory and run `npm start` to run React app
-3. Open another terminal in project directory and run `node NodeJS/server.js` to run server script
+# Instructions
+- Create .env file in project directory for environment variables (you can ask Ibrahim Saifullah ibrahim.saifullah1@gmail.com for this).
+  - There should be `DB_HOST`, `DB_USER`, `DB_PORT`, `DB_PASSWORD`, `DB_DATABASE`, `JWT_SECRET`, `SENDGRID_API_KEY`.
+  - If you want to continue to use SendGrid for email verification, ask me (Ibrahim) for my account login. I created it with a random password so that I can easily share it.
+- Open terminal in project directory and run `npm start` to run React app
+- Open another terminal in project directory and run `node NodeJS/server.js` to run server script
 
-The main files to worry about are src/App.js, the src/components folder, and NodeJS/server.js
+The main files to worry about are `src/App.js`, the `src/components` folder, and `NodeJS/server.js`.
+
 
 # Getting Started with Create React App
 
